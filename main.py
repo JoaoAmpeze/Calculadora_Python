@@ -5,18 +5,16 @@ import os
 import sys
 import time
 
-VERSION = "1.0.0"  # Versão atual da calculadora
+VERSION = "1.0.0"
 
 class Calculator:
     def __init__(self, root):
         self.root = root
         self.root.title("Calculadora")
 
-        # Criar entrada para mostrar as operações
         self.result = tk.Entry(root, width=16, font=('Arial', 24), bd=10, insertwidth=4, borderwidth=4, justify='right')
         self.result.grid(row=0, column=0, columnspan=4)
 
-        # Adicionar botões
         self.create_buttons()
 
     def create_buttons(self):
@@ -62,14 +60,11 @@ def download_update():
                 with open('main.py', 'wb') as f:
                     f.write(response.content)
                 print("Atualização concluída. Reiniciando o aplicativo...")
-                
-                # Inicie a nova instância do aplicativo
+
                 subprocess.Popen([sys.executable, 'main.py'])
                 
-                # Aguarde um momento para garantir que o novo processo seja iniciado
                 time.sleep(2)
                 
-                # Encerre o processo atual
                 sys.exit()
             else:
                 print("O arquivo baixado não é um script Python.")
@@ -84,7 +79,5 @@ def start_calculator():
     root.mainloop()
 
 if __name__ == "__main__":
-    # Verifique e aplique atualizações antes de iniciar a interface gráfica
     check_for_update()
-    # Inicie a calculadora
     start_calculator()
