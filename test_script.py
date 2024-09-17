@@ -5,7 +5,43 @@ import os
 import sys
 import time
 
-VERSION = "2.0.0"  # Versão atual da calculadora
+VERSION = "1.0.0"  # Versão atual da calculadora
+
+class Calculator:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Calculadora")
+
+        # Criar entrada para mostrar as operações
+        self.result = tk.Entry(root, width=16, font=('Arial', 24), bd=10, insertwidth=4, borderwidth=4, justify='right')
+        self.result.grid(row=0, column=0, columnspan=4)
+
+        # Adicionar botões
+        self.create_buttons()
+
+    def create_buttons(self):
+        buttons = [
+            ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
+            ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
+            ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
+            ('0', 4, 0), ('.', 4, 1), ('+', 4, 2), ('=', 4, 3),
+        ]
+
+        for (text, row, col) in buttons:
+            button = tk.Button(self.root, text=text, padx=20, pady=20, font=('Arial', 18), command=lambda t=text: self.on_button_click(t))
+            button.grid(row=row, column=col)
+
+    def on_button_click(self, text):
+        if text == '=':
+            try:
+                result = str(eval(self.result.get()))
+                self.result.delete(0, tk.END)
+                self.result.insert(tk.END, result)
+            except:
+                self.result.delete(0, tk.END)
+                self.result.insert(tk.END, 'Erro')
+        else:
+            self.result.insert(tk.END, text)
 
 def check_for_update():
     try:
@@ -52,39 +88,3 @@ if __name__ == "__main__":
     check_for_update()
     # Inicie a calculadora
     start_calculator()
-
-class Calculator:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Calculadora")
-
-        # Criar entrada para mostrar as operações
-        self.result = tk.Entry(root, width=16, font=('Arial', 24), bd=10, insertwidth=4, borderwidth=4, justify='right')
-        self.result.grid(row=0, column=0, columnspan=4)
-
-        # Adicionar botões
-        self.create_buttons()
-
-    def create_buttons(self):
-        buttons = [
-            ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
-            ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
-            ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
-            ('0', 4, 0), ('.', 4, 1), ('+', 4, 2), ('=', 4, 3),
-        ]
-
-        for (text, row, col) in buttons:
-            button = tk.Button(self.root, text=text, padx=20, pady=20, font=('Arial', 18), command=lambda t=text: self.on_button_click(t))
-            button.grid(row=row, column=col)
-
-    def on_button_click(self, text):
-        if text == '=':
-            try:
-                result = str(eval(self.result.get()))
-                self.result.delete(0, tk.END)
-                self.result.insert(tk.END, result)
-            except:
-                self.result.delete(0, tk.END)
-                self.result.insert(tk.END, 'Erro')
-        else:
-            self.result.insert(tk.END, text)
