@@ -8,7 +8,7 @@ VERSION = "1.0.0"  # Versão atual da calculadora
 
 def check_for_update():
     try:
-        response = requests.get('http://example.com/version')  # URL onde a versão mais recente está disponível
+        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/version.txt')  # URL onde a versão mais recente está disponível
         latest_version = response.text.strip()
         if latest_version != VERSION:
             download_update()
@@ -17,12 +17,21 @@ def check_for_update():
 
 def download_update():
     try:
-        response = requests.get('http://example.com/calculator.py')  # URL do arquivo atualizado
-        with open('calculator.py', 'wb') as f:
-            f.write(response.content)
-        print("Atualização concluída. Reiniciando o aplicativo...")
-        subprocess.call(['python', 'calculator.py'])
-        exit()  # Saia do processo atual após reiniciar
+        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/main.py')  # URL do arquivo atualizado
+        # Verifique se a resposta é bem-sucedida
+        if response.status_code == 200:
+            # Verifique se o conteúdo é um script Python (opcional, mas recomendado)
+            content_type = response.headers.get('Content-Type')
+            if content_type == 'text/x-python' or content_type == 'application/x-python':
+                with open('main.py', 'wb') as f:
+                    f.write(response.content)
+                print("Atualização concluída. Reiniciando o aplicativo...")
+                subprocess.call(['python', 'main.py'])
+                exit()  # Saia do processo atual após reiniciar
+            else:
+                print("O arquivo baixado não é um script Python.")
+        else:
+            print(f"Erro ao baixar o arquivo: Status Code {response.status_code}")
     except Exception as e:
         print(f"Erro ao baixar atualização: {e}")
 
