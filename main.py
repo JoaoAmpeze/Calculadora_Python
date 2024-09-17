@@ -3,6 +3,7 @@ from tkinter import messagebox
 import subprocess
 import requests
 import os
+import sys
 
 VERSION = "1.0.0"  # Versão atual da calculadora
 
