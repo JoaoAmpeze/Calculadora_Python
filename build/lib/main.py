@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import tkinter as tk
 import subprocess
 import requests
@@ -5,12 +7,12 @@ import os
 import sys
 import time
 
-VERSION = "2.0.0"
+VERSION = "1.0.0"
 
 class Calculator:
     def __init__(self, root):
         self.root = root
-        self.root.title("Calculadora 2.0")
+        self.root.title("Calculadora 1")
 
         self.result = tk.Entry(root, width=16, font=('Arial', 24), bd=10, insertwidth=4, borderwidth=4, justify='right')
         self.result.grid(row=0, column=0, columnspan=4)

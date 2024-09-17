@@ -5,7 +5,7 @@ import os
 import sys
 import time
 
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 
 class Calculator:
     def __init__(self, root):
