@@ -17,7 +17,7 @@ def check_for_update():
 
 def download_update():
     try:
-        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/main.py')  # URL do arquivo atualizado
+        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/test_script.py')  # URL do arquivo atualizado
         # Verifique se a resposta é bem-sucedida
         if response.status_code == 200:
             # Verifique se o conteúdo é um script Python (opcional, mas recomendado)
