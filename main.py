@@ -17,17 +17,28 @@ def check_for_update():
 
 def download_update():
     try:
-        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/test_script.py')  # URL do arquivo atualizado
+        # URL do arquivo atualizado
+        url = 'https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/test_script.py'
+        
+        # Solicitação para baixar o arquivo
+        response = requests.get(url)
+        
         # Verifique se a resposta é bem-sucedida
         if response.status_code == 200:
-            # Verifique se o conteúdo é um script Python (opcional, mas recomendado)
-            content_type = response.headers.get('Content-Type')
-            if content_type == 'text/x-python' or content_type == 'application/x-python':
+            # Verifique se o conteúdo é texto (opcional, mas recomendado)
+            content_type = response.headers.get('Content-Type', '')
+            if 'text/plain' in content_type:
+                # Salve o conteúdo do arquivo
                 with open('main.py', 'wb') as f:
                     f.write(response.content)
+                
                 print("Atualização concluída. Reiniciando o aplicativo...")
-                subprocess.call(['python', 'main.py'])
-                exit()  # Saia do processo atual após reiniciar
+                
+                # Reinicie o aplicativo
+                subprocess.Popen([sys.executable, 'main.py'])
+                
+                # Encerre o processo atual
+                sys.exit()
             else:
                 print("O arquivo baixado não é um script Python.")
         else:
@@ -35,8 +46,8 @@ def download_update():
     except Exception as e:
         print(f"Erro ao baixar atualização: {e}")
 
-# Verifica a atualização antes de iniciar a interface gráfica
-check_for_update()
+# Chame a função para iniciar o processo de atualização
+download_update()
 
 class Calculator:
     def __init__(self, root):
