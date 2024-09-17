@@ -9,7 +9,7 @@ VERSION = "2.0.0"  # Versão atual da calculadora
 
 def check_for_update():
     try:
-        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/version.txt')  # URL onde a versão mais recente está disponível
+        response = requests.get('https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/version.txt')
         latest_version = response.text.strip()
         if latest_version != VERSION:
             download_update()
@@ -18,21 +18,13 @@ def check_for_update():
 
 def download_update():
     try:
-        # URL do arquivo atualizado
         url = 'https://raw.githubusercontent.com/JoaoAmpeze/Calculadora_Pyton/master/test_script.py'
-        
-        # Solicitação para baixar o arquivo
         response = requests.get(url)
-        
-        # Verifique se a resposta é bem-sucedida
         if response.status_code == 200:
-            # Verifique se o conteúdo é texto (opcional, mas recomendado)
             content_type = response.headers.get('Content-Type', '')
             if 'text/plain' in content_type:
-                # Salve o conteúdo do arquivo
                 with open('main.py', 'wb') as f:
                     f.write(response.content)
-                
                 print("Atualização concluída. Reiniciando o aplicativo...")
                 
                 # Reinicie o aplicativo
@@ -47,8 +39,16 @@ def download_update():
     except Exception as e:
         print(f"Erro ao baixar atualização: {e}")
 
-# Chame a função para iniciar o processo de atualização
-download_update()
+def start_calculator():
+    root = tk.Tk()
+    app = Calculator(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    # Verifique e aplique atualizações antes de iniciar a interface gráfica
+    check_for_update()
+    # Inicie a calculadora
+    start_calculator()
 
 class Calculator:
     def __init__(self, root):
@@ -85,8 +85,3 @@ class Calculator:
                 self.result.insert(tk.END, 'Erro')
         else:
             self.result.insert(tk.END, text)
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Calculator(root)
-    root.mainloop()
