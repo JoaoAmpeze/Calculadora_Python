@@ -5,7 +5,7 @@ import os
 import sys
 import time
 
-VERSION = "1.0.0"  # Versão atual da calculadora
+VERSION = "2.0.0"  # Versão atual da calculadora
 
 class Calculator:
     def __init__(self, root):
