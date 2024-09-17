@@ -2,13 +2,16 @@ import requests
 import os
 import sys
 import subprocess
+import tkinter as tk
 
 # Função para verificar atualizações
 def check_for_update():
     try:
         # URL do arquivo que contém a versão mais recente
-        version_url = "https://example.com/latest_version.txt"
+        version_url = "https://github.com/JoaoAmpeze/Calculadora_Pyton/blob/master/version.txt"
         response = requests.get(version_url)
+        if response.status_code != 200:
+            raise Exception(f"Erro ao acessar {version_url}: {response.status_code}")
         latest_version = response.text.strip()
 
         # Lê a versão local
@@ -21,8 +24,10 @@ def check_for_update():
         if local_version != latest_version:
             print("Nova versão disponível!")
             # URL do arquivo para download
-            script_url = "https://example.com/latest_script.py"
+            script_url = "https://github.com/JoaoAmpeze/Calculadora_Pyton/blob/master/latest_script.py"
             response = requests.get(script_url)
+            if response.status_code != 200:
+                raise Exception(f"Erro ao acessar {script_url}: {response.status_code}")
             with open("latest_script.py", "wb") as file:
                 file.write(response.content)
             with open("version.txt", "w") as file:
@@ -38,8 +43,6 @@ def check_for_update():
 check_for_update()
 
 # Código da calculadora
-import tkinter as tk
-
 def click(event):
     text = event.widget.cget("text")
     if text == "=":
