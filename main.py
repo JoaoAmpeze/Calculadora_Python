@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox
 import subprocess
 import requests
 import os
 import sys
+import time
 
 VERSION = "1.0.0"  # Versão atual da calculadora
 
@@ -27,8 +27,11 @@ def download_update():
                     f.write(response.content)
                 print("Atualização concluída. Reiniciando o aplicativo...")
                 
-                # Reinicie o aplicativo
+                # Inicie a nova instância do aplicativo
                 subprocess.Popen([sys.executable, 'main.py'])
+                
+                # Aguarde um momento para garantir que o novo processo seja iniciado
+                time.sleep(2)
                 
                 # Encerre o processo atual
                 sys.exit()
